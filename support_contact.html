@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support | IRIS</title>
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #0d47a1;
+            --secondary: #e8f0fe;
+            --text: #202124;
+            --text-light: #5f6368;
+            --background: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--background);
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        main {
+            padding: 3rem 0;
+        }
+        
+        .support-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        .support-text {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .info-container {
+            background-color: var(--secondary);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .info-item {
+            margin-bottom: 1rem;
+        }
+        
+        .info-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .info-item strong {
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        .response-time {
+            text-align: center;
+            font-style: italic;
+            color: var(--text-light);
+            margin-top: 2rem;
+        }
+        
+        .app-icon {
+            display: block;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2rem;
+            border-radius: 20px;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .footer-content {
+            text-align: center;
+        }
+        
+        .footer-content a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .footer-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer-links {
+            margin: 1rem 0;
+        }
+        
+        .footer-links a {
+            margin: 0 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .support-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <div class="logo">IRIS</div>
+                <span>Support</span>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <div class="container">
+            <div class="support-container">
+                <div class="app-icon">IR</div>
+                <h1>Support – IRIS</h1>
+                <p class="support-text">If you have any questions, issues, or feedback, please contact us.</p>
+                
+                <div class="info-container">
+                    <div class="info-item">
+                        <strong>Contact email:</strong> support-iris@ludovichorem.com
+                    </div>
+                    <div class="info-item">
+                        <strong>App version:</strong> Check in the app settings
+                    </div>
+                    <div class="info-item">
+                        <strong>Platform:</strong> iOS
+                    </div>
+                    <div class="info-item">
+                        <strong>Language support:</strong> English, French
+                    </div>
+                </div>
+                
+                <p class="response-time">We aim to respond within 48 hours.</p>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h3>IRIS</h3>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="privacy_policies.html">Privacy Policy</a>
+                </div>
+                <p>&copy; 2025 IRIS. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
