@@ -32,6 +32,7 @@
             color: white;
             padding: 1.5rem 0;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
         
         .container {
@@ -175,18 +176,146 @@
             background-color: var(--primary-dark);
         }
         
+        /* Hamburger Menu Button */
+        .menu-button {
+            display: none;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .menu-button span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-button span:nth-child(1) {
+            top: 0;
+        }
+        
+        .menu-button span:nth-child(2) {
+            top: 10px;
+        }
+        
+        .menu-button span:nth-child(3) {
+            top: 20px;
+        }
+        
+        /* Transformed hamburger button (X shape) */
+        .menu-button.active span:nth-child(1) {
+            transform: rotate(45deg);
+            top: 10px;
+        }
+        
+        .menu-button.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-button.active span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 10px;
+        }
+        
+        /* Mobile Styles */
         @media (max-width: 768px) {
+            /* Mobile navigation bar (always visible) */
+            .mobile-nav-bar {
+                display: flex;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                padding: 10px;
+                z-index: 1002;
+                align-items: center;
+                justify-content: space-between;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            }
+            
+            .mobile-nav-bar .page-title {
+                color: white;
+                font-weight: bold;
+                font-size: 1.1rem;
+                margin-left: 10px;
+            }
+            
+            /* Add padding to body to account for fixed mobile nav bar */
+            body {
+                padding-top: 50px;
+            }
+            
+            .menu-button {
+                display: block;
+                position: relative;
+                right: 0;
+                top: 0;
+                width: 30px;
+                height: 25px;
+                cursor: pointer;
+                z-index: 1001;
+            }
+            
+            nav {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 80%;
+                height: 100%;
+                background-color: var(--secondary);
+                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                transition: left 0.3s ease;
+                z-index: 1003;
+                overflow-y: auto;
+                padding-top: 50px; /* Space for the fixed nav bar */
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
             .nav-container {
                 flex-direction: column;
+                padding: 20px 0 0;
             }
             
             .nav-item {
-                padding: 0.7rem 1rem;
+                padding: 1rem 2rem;
                 border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+                font-size: 1.1rem;
+            }
+            
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1001;
+            }
+            
+            .overlay.active {
+                display: block;
             }
             
             .policy-container {
                 padding: 1.5rem;
+            }
+            
+            /* Hide regular header on mobile */
+            header {
+                display: none;
             }
         }
     </style>
@@ -200,6 +329,17 @@
             </div>
         </div>
     </header>
+    
+    <!-- Mobile navigation bar - always visible on scroll -->
+    <div class="mobile-nav-bar">
+        <div class="menu-button">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    
+    <div class="overlay"></div>
     
     <nav>
         <div class="container">
@@ -390,6 +530,7 @@
                     
                     <p>By email: <a href="mailto:support-iris@ludovichorem.com">support-iris@ludovichorem.com</a></p>
                 </div>
+                
             </div>
         </div>
     </main>
@@ -405,7 +546,7 @@
         </div>
     </footer>
     
-    <a href="#" class="back-to-top" title="Back to top">↑</a>
+    <a href="#top" class="back-to-top" title="Back to top">↑</a>
     
     <script>
         // Smooth scrolling for anchor links
@@ -413,9 +554,29 @@
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                // Special case for back-to-top button
+                if (this.getAttribute('href') === '#top') {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    // For all other anchors, scroll to the element
+                    const targetElement = document.querySelector(this.getAttribute('href'));
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+                
+                // Close the drawer menu if it's open after clicking a link
+                if (window.innerWidth <= 768) {
+                    document.querySelector('nav').classList.remove('active');
+                    document.querySelector('.overlay').classList.remove('active');
+                    document.querySelector('.menu-button').classList.remove('active');
+                    document.body.style.overflow = ''; // Reset overflow to enable scrolling
+                }
             });
         });
         
@@ -431,6 +592,42 @@
         
         // Initialize back to top button as hidden
         document.querySelector('.back-to-top').style.display = 'none';
+        
+        // Hamburger menu toggle
+        const menuButton = document.querySelector('.menu-button');
+        const nav = document.querySelector('nav');
+        const overlay = document.querySelector('.overlay');
+        
+        menuButton.addEventListener('click', function() {
+            menuButton.classList.toggle('active');
+            nav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            // Toggle body overflow to prevent scrolling when menu is open
+            if (nav.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Close drawer when clicking outside
+        overlay.addEventListener('click', function() {
+            menuButton.classList.remove('active');
+            nav.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';  // Always enable scrolling when closing menu
+        });
+        
+        // Close drawer on window resize if screen becomes larger
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                menuButton.classList.remove('active');
+                nav.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';  // Always enable scrolling when closing menu
+            }
+        });
     </script>
 </body>
 </html>
