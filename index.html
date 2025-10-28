@@ -1,473 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IRIS - Epilepsy Seizure Detection</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>I.R.I.S - Work in Progress</title>
     <style>
-        :root {
-            --dark-blue: #162349;
-            --primary-blue: #1D61D4;
-            --secondary-cyan: #00D4D9;
-            --text-light: #F0F2FF;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Rajdhani', sans-serif;
-            background-color: var(--dark-blue);
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .main-content {
-            padding: 60px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 2px;
-        }
-        
-        .tagline {
-            font-size: 1.6rem;
-            font-weight: 500;
-            margin-bottom: 40px;
-            max-width: 700px;
-            letter-spacing: 0.5px;
-        }
-        
-        .description {
-            max-width: 700px;
-            margin-bottom: 30px;
-            opacity: 0.9;
-            font-size: 1.15rem;
-        }
-        
-        .app-badge {
-            margin-bottom: 40px;
-        }
-        
-        .app-badge img {
-            height: 60px;
-        }
-        
-        .placeholder-badge {
-            height: 60px;
-            width: 200px;
-            background-color: rgba(0, 212, 217, 0.15);
-            border: 1px solid rgba(0, 212, 217, 0.3);
-            border-radius: 10px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            letter-spacing: 0.5px;
         }
-        
-        .placeholder-badge:hover {
-            background-color: rgba(0, 212, 217, 0.25);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 212, 217, 0.2);
-        }
-        
-        .app-preview {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 0 40px;
-            gap: 20px;
-        }
-        
-        .device {
-            position: relative;
-            width: 250px;
-            height: 500px;
-            background-color: #000;
-            border-radius: 30px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
-        
-        .device img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .watch {
-            width: 150px;
-            height: 180px;
-            background-color: #000;
-            border-radius: 30px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
-        
-        .watch img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .features {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-        
-        .feature {
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
-            padding: 25px;
-            width: 300px;
+
+        .container {
             text-align: center;
-            border: 1px solid rgba(29, 97, 212, 0.2);
+            padding: 40px;
+            max-width: 600px;
         }
 
-        .notre-histoire {
-            max-width: 700px;
-            margin: 0 auto 60px;
-            padding: 30px;
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
-            border: 1px solid rgba(29, 97, 212, 0.2);
-            text-align: left;
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 2px;
         }
 
-        .notre-histoire h2 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--secondary-cyan);
-            margin-bottom: 15px;
+        .subtitle {
             font-size: 1.5rem;
-            letter-spacing: 0.5px;
-            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0.9;
         }
 
-        .notre-histoire p {
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-            line-height: 1.7;
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 30px;
         }
 
-        .notre-histoire .signature {
-            text-align: right;
-            font-weight: 600;
-            font-style: italic;
-            margin-top: 25px;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-        
-        .feature h3 {
-            margin-bottom: 10px;
-            color: var(--secondary-cyan);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.3rem;
-            letter-spacing: 0.5px;
-        }
-        
-        .feature p {
+
+        .message {
             font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.8;
         }
-        
-        .footer {
-            padding: 20px 0;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            opacity: 0.7;
+
+        .contact {
+            margin-top: 40px;
             font-size: 0.95rem;
-            letter-spacing: 0.5px;
+            opacity: 0.7;
         }
 
-        a {
-            color: #F0F2FF;
+        .contact a {
+            color: white;
             text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            transition: border-color 0.3s;
         }
-        
-        a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Language Selector Styles */
-        .language-selector {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid rgba(29, 97, 212, 0.3);
-        }
-        
-        .language-btn {
-            padding: 8px 12px;
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .language-btn:hover {
-            background-color: rgba(29, 97, 212, 0.3);
-        }
-        
-        .language-btn.active {
-            background-color: var(--primary-blue);
-        }
-        
-        @media (max-width: 768px) {
-            .app-preview {
-                flex-direction: column;
-            }
-            
-            .features {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .logo {
-                font-size: 3rem;
-            }
-            
-            .language-selector {
-                top: 10px;
-                right: 10px;
-            }
+
+        .contact a:hover {
+            border-bottom-color: white;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="language-selector">
-            <button class="language-btn active" data-lang="en">EN</button>
-            <button class="language-btn" data-lang="fr">FR</button>
-            <button class="language-btn" data-lang="de">DE</button>
-            <button class="language-btn" data-lang="es">ES</button>
-        </div>
-        
-        <div class="main-content">
-            <h1 class="logo">I.R.I.S</h1>
-            <p class="tagline" data-i18n="tagline">Intelligent Epilepsy Seizure Detection System for Apple Watch</p>
-
-            <div class="notre-histoire">
-                <h2 data-i18n="story-title">Our Story</h2>
-                <p data-i18n="story-p1">
-                    IRIS was born from a personal experience that changed our lives: our 4-year-old daughter's epilepsy diagnosis. Faced with constant anxiety and a feeling of helplessness, we decided to take action.
-                </p>
-                <p data-i18n="story-p2">
-                    Let's be clear: we're not selling false hopes or miracle solutions. IRIS is simply the result of our determination as parents, developed entirely by ourselves. We're not a company with a marketing team or customer service - just two parents who created the tool we desperately needed.
-                </p>
-                <p data-i18n="story-p3">
-                    Your feedback is essential to us. If you encounter any problems or have suggestions to improve IRIS, contact us directly. We personally respond to every message.
-                </p>
-                <p class="signature" data-i18n="signature">
-                    With you in this fight,<br>
-                    Ludovic and Tiffanie
-                </p>
-            </div>
-            
-            <p class="description" data-i18n="description">
-                IRIS uses your Apple Watch to detect early signs of epileptic seizures in real-time and automatically alert your emergency contacts.
-            </p>
-            
-            <div class="app-badge">
-                <div class="placeholder-badge" data-i18n="download">DOWNLOAD</div>
-            </div>
-            
-            <div class="app-preview">
-                <div class="device">
-                    <img src="assets/iphone_screen.PNG" alt="IRIS iPhone Screenshot">
-                </div>
-                <div class="watch">
-                    <img src="assets/watch_screen.png" alt="IRIS Apple Watch Screenshot">
-                </div>
-            </div>
-            
-            <div class="features">
-                <div class="feature">
-                    <h3 data-i18n="feature1-title">REAL-TIME DETECTION</h3>
-                    <p data-i18n="feature1-desc">Continuous monitoring of physiological signs characteristic of a seizure</p>
-                </div>
-                <div class="feature">
-                    <h3 data-i18n="feature2-title">AUTOMATIC ALERTS</h3>
-                    <p data-i18n="feature2-desc">Immediate notification of emergency contacts with precise location</p>
-                </div>
-                <div class="feature">
-                    <h3 data-i18n="feature3-title">DETAILED TRACKING</h3>
-                    <p data-i18n="feature3-desc">Complete event log for better medical monitoring</p>
-                </div>
-            </div>
-            
-            <div class="footer">
-                <p>&copy; 2025 IRIS - <span data-i18n="rights">All rights reserved</span></p>
-                <a href="privacy/" data-i18n="privacy">Privacy Policy</a>
-                <p>Contact: support-iris@ludovichorem.com</p>
-            </div>
+        <h1>I.R.I.S</h1>
+        <div class="spinner"></div>
+        <p class="subtitle">Site en cours de maintenance</p>
+        <p class="message">
+            Nous travaillons actuellement sur une nouvelle version du site.<br>
+            Merci de votre patience.
+        </p>
+        <div class="contact">
+            Contact : <a href="mailto:support-iris@ludovichorem.com">support-iris@ludovichorem.com</a><br>
+            <a href="privacy/">Déclaration de confidentialité</a>
         </div>
     </div>
-
-    <script>
-        // Language translation data
-        const translations = {
-            en: {
-                "tagline": "Intelligent Epilepsy Monitoring System for Apple Watch",
-                "story-title": "Our Story",
-                "story-p1": "IRIS was born from a personal experience that changed our lives: our 4-year-old daughter's epilepsy diagnosis. Faced with constant anxiety and a feeling of helplessness, we decided to take action.",
-                "story-p2": "Let's be clear: we're not selling false hopes or miracle solutions. IRIS is simply the result of our determination as parents, developed entirely by ourselves. We're not a company with a marketing team or customer service—just two parents who created the tool we desperately needed.",
-                "story-p3": "Your feedback is essential to us. If you encounter any problems or have suggestions to improve IRIS, contact us directly. We personally respond to every message.",
-                "signature": "With you in this fight,<br>Ludovic and Tiffanie",
-                "description": "IRIS uses your Apple Watch to monitor physiological signs related to epilepsy in real time and automatically notify your emergency contacts.",
-                "download": "DOWNLOAD",
-                "feature1-title": "REAL-TIME MONITORING",
-                "feature1-desc": "Continuous tracking of physiological signals associated with seizures",
-                "feature2-title": "AUTOMATIC ALERTS",
-                "feature2-desc": "Immediate notification of emergency contacts with precise location",
-                "feature3-title": "DETAILED TRACKING",
-                "feature3-desc": "Complete event log for improved medical follow-up",
-                "rights": "All rights reserved",
-                "privacy": "Privacy Policy"
-            },
-            fr: {
-                "tagline": "Système intelligent de surveillance de l’épilepsie pour Apple Watch",
-                "story-title": "Notre histoire",
-                "story-p1": "IRIS est née d'une expérience personnelle qui a bouleversé notre vie : le diagnostic d'épilepsie de notre fille de 4 ans. Face à l'angoisse permanente et au sentiment d'impuissance, nous avons décidé d'agir.",
-                "story-p2": "Soyons clairs : nous ne vendons pas de faux espoirs ni de solutions miracles. IRIS est simplement le fruit de notre détermination de parents, développée entièrement par nous-mêmes. Nous ne sommes pas une entreprise avec une équipe marketing ou un service client — juste deux parents qui ont créé l'outil dont nous avions désespérément besoin.",
-                "story-p3": "Vos retours sont essentiels pour nous. Si vous rencontrez le moindre problème ou avez des suggestions pour améliorer IRIS, contactez-nous directement. Nous répondons personnellement à chaque message.",
-                "signature": "Avec vous dans ce combat,<br>Ludovic et Tiffanie",
-                "description": "IRIS utilise votre Apple Watch pour surveiller en temps réel les signes liés à l’épilepsie et alerter automatiquement vos contacts d’urgence.",
-                "download": "TÉLÉCHARGER",
-                "feature1-title": "SURVEILLANCE EN TEMPS RÉEL",
-                "feature1-desc": "Suivi continu des signaux physiologiques associés aux crises",
-                "feature2-title": "ALERTES AUTOMATIQUES",
-                "feature2-desc": "Notification immédiate des contacts d’urgence avec localisation précise",
-                "feature3-title": "SUIVI DÉTAILLÉ",
-                "feature3-desc": "Journal complet des événements pour un meilleur suivi médical",
-                "rights": "Tous droits réservés",
-                "privacy": "Déclaration de confidentialité"
-            },
-            de: {
-                "tagline": "Intelligentes Epilepsie-Überwachungssystem für Apple Watch",
-                "story-title": "Unsere Geschichte",
-                "story-p1": "IRIS entstand aus einer persönlichen Erfahrung, die unser Leben veränderte: der Epilepsiediagnose unserer 4-jährigen Tochter. Angesichts ständiger Angst und einem Gefühl der Hilflosigkeit beschlossen wir zu handeln.",
-                "story-p2": "Klarstellung: Wir verkaufen keine falschen Hoffnungen oder Wunderlösungen. IRIS ist einfach das Ergebnis unserer Entschlossenheit als Eltern, vollständig von uns selbst entwickelt. Wir sind kein Unternehmen mit Marketingteam oder Kundendienst — nur zwei Eltern, die das Werkzeug geschaffen haben, das wir dringend brauchten.",
-                "story-p3": "Ihr Feedback ist für uns unerlässlich. Wenn Sie auf Probleme stoßen oder Vorschläge zur Verbesserung von IRIS haben, kontaktieren Sie uns direkt. Wir antworten persönlich auf jede Nachricht.",
-                "signature": "Mit Ihnen in diesem Kampf,<br>Ludovic und Tiffanie",
-                "description": "IRIS nutzt Ihre Apple Watch, um physiologische Anzeichen im Zusammenhang mit Epilepsie in Echtzeit zu überwachen und Ihre Notfallkontakte automatisch zu benachrichtigen.",
-                "download": "HERUNTERLADEN",
-                "feature1-title": "ECHTZEIT-ÜBERWACHUNG",
-                "feature1-desc": "Kontinuierliche Erfassung physiologischer Signale, die mit Anfällen in Verbindung stehen",
-                "feature2-title": "AUTOMATISCHE WARNUNGEN",
-                "feature2-desc": "Sofortige Benachrichtigung der Notfallkontakte mit genauem Standort",
-                "feature3-title": "DETAILLIERTE VERFOLGUNG",
-                "feature3-desc": "Vollständiges Ereignisprotokoll für eine verbesserte medizinische Nachverfolgung",
-                "rights": "Alle Rechte vorbehalten",
-                "privacy": "Datenschutzerklärung"
-            },
-            es: {
-                "tagline": "Sistema Inteligente de Monitoreo de Epilepsia para Apple Watch",
-                "story-title": "Nuestra Historia",
-                "story-p1": "IRIS nació de una experiencia personal que cambió nuestras vidas: el diagnóstico de epilepsia de nuestra hija de 4 años. Frente a la ansiedad constante y el sentimiento de impotencia, decidimos actuar.",
-                "story-p2": "Seamos claros: no vendemos falsas esperanzas ni soluciones milagrosas. IRIS es simplemente el resultado de nuestra determinación como padres, desarrollada completamente por nosotros mismos. No somos una empresa con equipo de marketing o servicio al cliente — solo dos padres que crearon la herramienta que desesperadamente necesitábamos.",
-                "story-p3": "Sus comentarios son esenciales para nosotros. Si encuentra algún problema o tiene sugerencias para mejorar IRIS, contáctenos directamente. Respondemos personalmente a cada mensaje.",
-                "signature": "Con ustedes en esta lucha,<br>Ludovic y Tiffanie",
-                "description": "IRIS utiliza su Apple Watch para monitorear en tiempo real signos relacionados con la epilepsia y notificar automáticamente a sus contactos de emergencia.",
-                "download": "DESCARGAR",
-                "feature1-title": "MONITOREO EN TIEMPO REAL",
-                "feature1-desc": "Seguimiento continuo de señales fisiológicas asociadas con crisis",
-                "feature2-title": "ALERTAS AUTOMÁTICAS",
-                "feature2-desc": "Notificación inmediata a contactos de emergencia con ubicación precisa",
-                "feature3-title": "SEGUIMIENTO DETALLADO",
-                "feature3-desc": "Registro completo de eventos para un mejor seguimiento médico",
-                "rights": "Todos los derechos reservados",
-                "privacy": "Política de Privacidad"
-            }
-            };
-
-        // Function to change language
-        function changeLanguage(lang) {
-            // Update HTML lang attribute
-            document.documentElement.lang = lang;
-            
-            // Update page title
-            const titles = {
-                'en': 'IRIS - Epilepsy Seizure Detection',
-                'fr': 'IRIS - Détection de crises d\'épilepsie',
-                'de': 'IRIS - Epilepsie-Anfallerkennung',
-                'es': 'IRIS - Detección de Crisis Epilépticas'
-            };
-            document.title = titles[lang];
-            
-            // Update all translatable elements
-            const elements = document.querySelectorAll('[data-i18n]');
-            elements.forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[lang][key]) {
-                    // Special handling for elements that may contain HTML
-                    if (key === 'signature') {
-                        el.innerHTML = translations[lang][key];
-                    } else {
-                        el.innerHTML = translations[lang][key];
-                    }
-                }
-            });
-            
-            // Update active language button
-            document.querySelectorAll('.language-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('data-lang') === lang) {
-                    btn.classList.add('active');
-                }
-            });
-            
-            // Save language preference
-            localStorage.setItem('iris-language', lang);
-        }
-        
-        // Initialize language buttons
-        document.querySelectorAll('.language-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const lang = this.getAttribute('data-lang');
-                changeLanguage(lang);
-            });
-        });
-        
-        // Set initial language (default to English or use stored preference)
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedLang = localStorage.getItem('iris-language') || 'en';
-            changeLanguage(savedLang);
-        });
-    </script>
 </body>
 </html>
