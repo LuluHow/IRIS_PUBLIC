@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I.R.I.S - Détection de crises d'épilepsie</title>
+    <link rel="icon" type="image/png" href="assets/appstore.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #004C8C 0%, #0066CC 50%, #00B4D8 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px;
+            max-width: 800px;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-image {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 15px;
+            border-radius: 22%;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .disclaimer {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            background: rgba(220, 38, 38, 0.15);
+            border: 2px solid #DC2626;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.25);
+            text-align: left;
+        }
+
+        .disclaimer-header {
+            background: rgba(220, 38, 38, 0.3);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2px solid #DC2626;
+        }
+
+        .disclaimer-icon {
+            font-size: 1.8rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        .disclaimer-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .disclaimer-content {
+            padding: 20px 25px;
+        }
+
+        .disclaimer-content ul {
+            margin: 0;
+            padding-left: 20px;
+            list-style-type: none;
+        }
+
+        .disclaimer-content li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .disclaimer-content li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #DC2626;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .disclaimer-content li:last-child {
+            margin-bottom: 0;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 30px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .message {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+
+        .contact {
+            margin-top: 40px;
+            font-size: 0.95rem;
+            opacity: 0.7;
+        }
+
+        .contact a {
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            transition: border-color 0.3s;
+        }
+
+        .contact a:hover {
+            border-bottom-color: white;
+        }
+
+        .instructions {
+            max-width: 600px;
+            margin: 30px auto;
+            text-align: left;
+        }
+
+        .instructions h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .step:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #0066CC 0%, #00B4D8 100%);
+            border-radius: 50%;
+            font-size: 1.3rem;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-right: 20px;
+            box-shadow: 0 4px 10px rgba(0, 180, 216, 0.4);
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .step-content p {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .app-store-badge {
+            display: inline-block;
+            margin-top: 15px;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .app-store-badge img {
+            height: 50px;
+            width: auto;
+        }
+
+        .app-store-badge:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .testflight-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 15px;
+            padding: 20px 30px;
+            background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testflight-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .testflight-btn-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 13px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .testflight-btn-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .testflight-btn-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .testflight-btn-title {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            line-height: 1;
+        }
+
+        .testflight-btn:hover {
+            background: linear-gradient(135deg, #0051D5 0%, #003D99 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 122, 255, 0.5);
+        }
+
+        .testflight-btn:hover::before {
+            left: 100%;
+        }
+
+        .testflight-btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
+        }
+
+        .important-box {
+            max-width: 600px;
+            margin: 30px auto;
+            background: rgba(255, 165, 0, 0.15);
+            border: 2px solid #FFA500;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(255, 165, 0, 0.2);
+        }
+
+        .important-header {
+            background: rgba(255, 165, 0, 0.3);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #FFA500;
+        }
+
+        .warning-icon {
+            font-size: 1.5rem;
+        }
+
+        .important-header h3 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .important-content {
+            padding: 20px;
+            text-align: left;
+        }
+
+        .important-content p {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .important-content p:last-of-type {
+            margin-bottom: 20px;
+        }
+
+        .screenshot {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .screenshot img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            max-height: 500px;
+            object-fit: contain;
+        }
+
+        .note {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #00B4D8;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .note p {
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .logo-image {
+                width: 100px;
+                height: 100px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .disclaimer {
+                margin: 0 10px 30px;
+            }
+
+            .disclaimer-header {
+                padding: 12px 15px;
+            }
+
+            .disclaimer-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .disclaimer-icon {
+                font-size: 1.5rem;
+            }
+
+            .disclaimer-content {
+                padding: 15px 18px;
+            }
+
+            .disclaimer-content li {
+                font-size: 0.95rem;
+                margin-bottom: 10px;
+            }
+
+            .instructions {
+                padding: 0 10px;
+            }
+
+            .step {
+                padding: 15px;
+            }
+
+            .step-number {
+                width: 35px;
+                height: 35px;
+                font-size: 1.1rem;
+                margin-right: 15px;
+            }
+
+            .step-content h3 {
+                font-size: 1.1rem;
+            }
+
+            .step-content p {
+                font-size: 0.95rem;
+            }
+
+            .important-box {
+                margin: 20px 10px;
+            }
+
+            .important-header {
+                padding: 12px 15px;
+            }
+
+            .important-header h3 {
+                font-size: 1.2rem;
+            }
+
+            .important-content {
+                padding: 15px;
+            }
+
+            .screenshot img {
+                max-height: 400px;
+            }
+
+            .testflight-btn {
+                gap: 15px;
+                padding: 16px 24px;
+            }
+
+            .testflight-btn-logo {
+                width: 50px;
+                height: 50px;
+            }
+
+            .testflight-btn-label {
+                font-size: 0.75rem;
+            }
+
+            .testflight-btn-title {
+                font-size: 1.6rem;
+                letter-spacing: 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="assets/appstore.png" alt="Logo I.R.I.S" class="logo-image">
+            <h1>I.R.I.S</h1>
+        </div>
+        <p class="subtitle">Bêta disponible sur TestFlight</p>
+
+        <div class="disclaimer">
+            <div class="disclaimer-header">
+                <span class="disclaimer-icon">⚠️</span>
+                <h2>Avertissement important</h2>
+            </div>
+            <div class="disclaimer-content">
+                <ul>
+                    <li>Cette application est en <strong>version bêta</strong>. Les fonctionnalités sont expérimentales et peuvent ne pas fonctionner correctement.</li>
+                    <li>Les alertes ou détections générées <strong>ne remplacent pas un avis médical</strong>, ni un dispositif de surveillance approuvé.</li>
+                    <li>Les testeurs doivent <strong>continuer à suivre les recommandations de leur médecin</strong> et ne pas se fier uniquement à cette app pour la sécurité ou la santé.</li>
+                    <li>Des <strong>faux positifs</strong> (alertes inutiles) ou <strong>faux négatifs</strong> (crises non détectées) peuvent survenir.</li>
+                    <li>L'application peut évoluer rapidement ; des modifications ou corrections peuvent survenir sans préavis.</li>
+                    <li>Toute utilisation de l'application se fait <strong>sous la responsabilité du testeur</strong>. Le développeur ne saurait être tenu responsable de tout incident.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h2>Comment installer I.R.I.S ?</h2>
+
+            <div class="step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    <h3>Installez TestFlight</h3>
+                    <p>TestFlight est l'application officielle d'Apple pour tester les applications en version bêta.</p>
+                    <p>Sur votre iPhone, cliquez sur le badge ci-dessous pour ouvrir TestFlight dans l'App Store, puis appuyez sur "Obtenir" :</p>
+                    <a href="https://itunes.apple.com/us/app/testflight/id899247664?mt=8" class="app-store-badge" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/app-store-badge-fr.svg" alt="Télécharger dans l'App Store">
+                    </a>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    <h3>Rejoignez la bêta I.R.I.S</h3>
+                    <p>Une fois TestFlight installé, cliquez sur le bouton ci-dessous depuis votre iPhone.</p>
+                    <p>Cela ouvrira automatiquement TestFlight avec l'invitation à la bêta I.R.I.S :</p>
+                    <a href="https://testflight.apple.com/join/keWqmJ6x" class="testflight-btn" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/appstore.png" alt="Logo I.R.I.S" class="testflight-btn-logo">
+                        <div class="testflight-btn-text">
+                            <span class="testflight-btn-label">Rejoindre la bêta</span>
+                            <span class="testflight-btn-title">I.R.I.S</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    <h3>Installez l'application</h3>
+                    <p>Dans TestFlight, vous verrez apparaître I.R.I.S dans votre liste d'applications bêta.</p>
+                    <p>Appuyez sur le bouton bleu "Installer". L'installation se fera automatiquement sur votre iPhone et votre Apple Watch.</p>
+                </div>
+            </div>
+
+            <div class="important-box">
+                <div class="important-header">
+                    <span class="warning-icon">⚠️</span>
+                    <h3>Étape importante</h3>
+                </div>
+                <div class="important-content">
+                    <p><strong>Vérifiez l'installation sur l'Apple Watch :</strong></p>
+                    <p>Après l'installation, appuyez sur l'icône I.R.I.S dans TestFlight pour voir les détails de l'application.</p>
+                    <p>Assurez-vous que l'option <strong>"Afficher sur l'Apple Watch"</strong> est bien cochée (activée en vert).</p>
+                    <p>Si l'option affiche un indicateur de chargement, patientez quelques instants : l'application est en train de s'installer sur votre montre.</p>
+                    <div class="screenshot">
+                        <img src="assets/important.jpg" alt="Vérifier l'option Apple Watch dans TestFlight">
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <div class="step-content">
+                    <h3>Configurez et utilisez I.R.I.S</h3>
+                    <p>Une fois installée, ouvrez I.R.I.S sur votre iPhone.</p>
+                    <p>L'application vous guidera pour configurer la surveillance sur votre Apple Watch.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="note">
+            <p><strong>Note :</strong> I.R.I.S nécessite un iPhone et une Apple Watch. Cette version bêta est destinée aux tests.</p>
+        </div>
+
+        <div class="contact">
+            Besoin d'aide ? <a href="mailto:support-iris@ludovichorem.com">support-iris@ludovichorem.com</a><br>
+            <a href="privacy/">Déclaration de confidentialité</a>
+        </div>
+    </div>
+</body>
+</html>
